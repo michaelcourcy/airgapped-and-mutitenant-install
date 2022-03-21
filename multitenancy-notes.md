@@ -45,41 +45,40 @@ The login and password were setup in the docker command it's admin/admin.
 
 We create a new realm call "my-company"
 
-![New realm my-company](../assets/add-realm.png)
 
 Make sure this realm has also SSL not required
 
-![disable SSL for realm my-company](../assets/add-realm-disable-ssl.png)
+
 
 ## Create a k10admin group and a user in this group
 
 Create an admin group k10admin (we'll add other group later)
 
-![Create k10admin group](../assets/add-admin-group.png)
+
 
 Create the user michael belonging to the k10admingroup. Make sure it has his email verified.
 
-![Create michael](../assets/add-user.png)
+
 
 Setup the password as michael (same as username for simplicity but feel free to use something else).
 Turn off temporary.
 
-![Setup password](../assets/add-user-password.png)
+
 
 Make sure it has his email verified
 
-![Check email verified](../assets/add-user-email-verified.png)
+
 
 ## Create a kasten client in the realm
 
 Create a kasten client in the realm my-company.
 Make sure the client is Enabled.
 
-![Create a kasten client](../assets/add-client.png)
+
 
 Make sure this client is confidential and accept implicit flow (implicit flow is needed for using oidcdebugger)
 
-![kasten client, confidential and accept implicit flow](../assets/add-client-confidential-implicit.png)
+
 
 On the allowed redirect add
 - https://oidcdebugger.com/debug
@@ -88,14 +87,13 @@ On the allowed redirect add
 echo http://k8svm.${INSTRUQT_PARTICIPANT_ID}.instruqt.io:32000/k10/auth-svc/v0/oidc/redirect
 ```
 
-![kasten client, redirects](../assets/add-client-redirects.png)
+
 
 To add the groups in the JWT token add the group mapper,
 - Disable Full group path.
 - For name choose what you want (ie group-mapper)
 - For Token Claim Name choose `groups`
 
-![kasten client, add the group mapper](../assets/add-client-group-mapper.png)
 
 
 # Let see what will be the JWT token returned by keycloak
@@ -108,7 +106,6 @@ curl http://keycloak.${INSTRUQT_PARTICIPANT_ID}.instruqt.io:8080/auth/realms/my-
 
 to fill up the field form
 
-![Fill up the form](../assets/oidc-debugger.png)
 
 Then click send and connect as michael/michael
 
@@ -188,7 +185,7 @@ Notice particulary this option about the client secret which is used when workin
 
 You can find the secret in the credential tab of the kasten client in Keycloack.
 
-![kasten client credential](../assets/kasten-client-secret.png)
+
 
 Replace the value of the secret in the values.yaml file.
 
@@ -252,14 +249,10 @@ You'll be redirected to the keycloak login window if you have not been authentif
 
 Identify first as michael/michael and check you have proper username
 
-![Connected as Michael](../assets/session-michael-username.png)
 
 And check the groups you belong to :
 groups Settings > Support > View Current User Details
 
-![Michael'group](../assets/session-settings.png)
-
-![Michael'group](../assets/session-michael-group.png)
 
 # Logout
 
@@ -275,7 +268,7 @@ You need to explicitly open the OIDC provider page
 echo http://keycloak.${INSTRUQT_PARTICIPANT_ID}.instruqt.io:8080/auth/realms/my-company/account/#/
 ```
 
-![Keycloak signout](../assets/session-michael-signout.png)
+
 
 Now you can singn out on kasten and sign in again with another user
 
@@ -283,11 +276,11 @@ Now you can singn out on kasten and sign in again with another user
 
 Now login as dev-user1 or dev-user2 and check your group, you should see in both case one group : dev.
 
-![dev-user1 groups](../assets/session-dev-user1-group.png)
+
 
 Log out and login as devops-user1 you should see 3 groups dev, test and prod
 
-![devops-user1 groups](../assets/session-devops-user1-group.png)
+
 
 # Conclusion
 
@@ -298,7 +291,7 @@ But for the moment whatever the user there is nothing we can do ...
 
 Tiles show 0 applications and 0 policies. How that happens ?
 
-![devops-user1 no apps](../assets/session-dev-user1-0-apps.png)
+
 
 It's here that RBAC will come into play, and that's for the next challenges.
 
